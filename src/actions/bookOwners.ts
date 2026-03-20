@@ -34,10 +34,10 @@ export async function fetchBookOwners() {
       })
     }
     const data = await response.json()
-    console.log(data)
     const parsedData = await BookOwnersResponseSchema.parseAsync(data)
     return parsedData
   } catch (error) {
+    // @TODO: move to sentry/datadog
     console.error("Error fetching book owners:", error)
     throw error
   }

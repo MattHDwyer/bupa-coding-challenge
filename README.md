@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bupa Coding Challenge
 
-## Getting Started
+A [Next.js](https://nextjs.org) app built with React 19, Tailwind CSS 4, and Zod 4.
 
-First, run the development server:
+## Improvements I Would Make:
+
+1. Adding toast notifications to the click of buttons
+2. Additional tests for the components themselves
+3. Add additional logging (e.g. Sentry/DataDog etc)
+
+## Process:
+
+1. Added neccessary dependencies I thought I'd require
+2. Implemented server action first
+3. Set up React Query to fetch the data
+4. Design generic layout with HTML
+5. Broke up the `page.tsx` into components
+6. Added zod for schema checks on the response (after noticing some unusual responses)
+7. Added styling
+8. Asked AI to double check a11y compliance, and implemented it's recommendations
+9. Wrote some API tests (recognised that there were some times it was returning some data)
+10. Updated documentation
+
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script   | Command          | Description                          |
+| -------- | ---------------- | ------------------------------------ |
+| `dev`    | `npm run dev`    | Start the Next.js development server |
+| `build`  | `npm run build`  | Create a production build            |
+| `start`  | `npm run start`  | Start the production server          |
+| `lint`   | `npm run lint`   | Run ESLint                           |
+| `test`   | `npm run test`   | Run tests with Vitest (watch mode)   |
+| `format` | `npm run format` | Format code with Prettier            |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Testing
 
-## Learn More
+Tests are run with [Vitest](https://vitest.dev/).
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `fetchBookOwners` (`src/actions/bookOwners.test.ts`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tests for the server action that fetches and validates data from the Bupa book owners API:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Test                                                                       | Description                                                                                                              |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **throws an error if the API returns a non-200 status code**               | Asserts that a non-OK response (e.g. 404) throws an `Error` with the status code                                         |
+| **parses valid response**                                                  | Asserts that a well-formed API response is parsed and returned correctly via the Zod schema                              |
+| **throws error on successful response with invalid schema**                | Asserts that a 200 response with data that doesn't match the schema (missing required `type` field) throws a `$ZodError` |
+| **passes without error on successful response with additional properties** | Asserts that extra/unknown properties on owners and books are allowed through (`looseObject` passthrough behaviour)      |
