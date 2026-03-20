@@ -30,11 +30,15 @@ export default function Home() {
   )
 
   return (
-    <main className="bg-white">
+    <main id="main-content" className="bg-white">
       <Header title="Owners and Books" />
-      <section className="lg:max-w-2/3 w-4/5 mx-auto flex flex-col gap-4">
+      <section
+        aria-label="Book collections"
+        className="lg:max-w-2/3 w-4/5 mx-auto flex flex-col gap-4"
+      >
         <div
           id="books-owned-container"
+          aria-live="polite"
           className="flex flex-col lg:flex-row gap-4 w-full justify-center"
         >
           <Card

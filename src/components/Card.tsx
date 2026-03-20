@@ -3,7 +3,7 @@
 import { useId } from "react"
 import { isNullOrUndefined } from "@sindresorhus/is"
 import { Book, BookOwner } from "@/constants/types"
-import { TypographyText, TypographyH2 } from "./Typography"
+import { TypographyH2 } from "./Typography"
 
 export function Card({
   demographic,
@@ -15,7 +15,6 @@ export function Card({
   hardCoverOnly: boolean
 }) {
   const titleId = useId()
-  const booksId = useId()
 
   if (isNullOrUndefined(bookOwners)) {
     return null
@@ -35,20 +34,19 @@ export function Card({
   }
 
   return (
-    <div className="lg:max-w-64 lg:w-64 text">
-      <div
-        id={`title_${titleId}`}
-        className="bg-bupa-blue text-center text-white px-2 py-4 rounded-sm"
-      >
-        <TypographyH2>
+    <section aria-labelledby={titleId} className="lg:max-w-64 lg:w-64 text">
+      <div className="bg-bupa-blue text-center text-white px-2 py-4 rounded-sm">
+        <TypographyH2 id={titleId}>
           {hardCoverOnly && "Hardcover"} Books owned by {demographic}
         </TypographyH2>
       </div>
-      <div id={`books_${booksId}`}>
+      <ul className="list-none p-0">
         {filteredBooks.map((book: Book, index: number) => (
-          <TypographyText key={index}>{book.name}</TypographyText>
+          <li key={index} className="text-lg">
+            {book.name}
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   )
 }

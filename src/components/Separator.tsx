@@ -1,10 +1,20 @@
 "use client"
 
 import * as React from "react"
-import { Separator as SeparatorPrimitive } from "radix-ui"
+import { cn } from "@/utils/cn"
 
 export function Separator({
   className,
-}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
-  return <hr className={className} />
+  decorative = true,
+}: {
+  className?: string
+  decorative?: boolean
+}) {
+  return (
+    <hr
+      className={cn(className)}
+      aria-hidden={decorative || undefined}
+      role={decorative ? "presentation" : "separator"}
+    />
+  )
 }
