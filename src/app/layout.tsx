@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Owners and Books | Bupa",
-  description: "Browse book owners and their book collections",
+  title: "Owners and Books",
+  description: "Browse owner demographics and books they own",
 }
 
 export default function RootLayout({

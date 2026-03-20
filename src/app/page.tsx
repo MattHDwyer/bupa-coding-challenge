@@ -46,7 +46,7 @@ export default function Home() {
           className="flex flex-col lg:flex-row gap-4 w-full justify-center"
         >
           {isError && (
-            <p className="text-red-500">
+            <p className="text-red-700">
               Error fetching books! Please try again.
             </p>
           )}
@@ -81,6 +81,7 @@ export default function Home() {
                 refetchBookOwners()
               }}
               isLoading={isLoading}
+              aria-label={isLoading ? "Get books, loading" : "Get books"}
             >
               Get Books
             </Button>
