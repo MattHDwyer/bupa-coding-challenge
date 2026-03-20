@@ -1,4 +1,4 @@
-import { TypographyH1 } from "./Typography"
+import { TypographyH1 } from "@/components/Typography"
 
 export function Header({ title }: { title: string }) {
   return (

@@ -18,8 +18,12 @@ export default function Home() {
     // @TODO: Add success notification for when query is successful
     // isSuccess,
     // @TODO: add error notification for when query is unsuccessful
-    // isError,
-  } = useQuery(getBookOwners())
+    isError,
+  } = useQuery({
+    ...getBookOwners(),
+    // disable to have button fetch on page load
+    enabled: false,
+  })
 
   const childBookOwners = bookOwners?.filter(
     (bookOwner: BookOwner) => bookOwner.age < 18
@@ -41,6 +45,11 @@ export default function Home() {
           aria-live="polite"
           className="flex flex-col lg:flex-row gap-4 w-full justify-center"
         >
+          {isError && (
+            <p className="text-red-500">
+              Error fetching books! Please try again.
+            </p>
+          )}
           <Card
             demographic="Adults"
             bookOwners={adultBookOwners}
