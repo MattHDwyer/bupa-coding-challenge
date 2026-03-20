@@ -5,11 +5,11 @@ import "server-only"
 import * as z from "zod/mini"
 
 const BookOwnersResponseSchema = z.array(
-  z.object({
+  z.looseObject({
     age: z.number(),
     name: z.string(),
     books: z.array(
-      z.object({
+      z.looseObject({
         name: z.string(),
         type: z.enum(["Hardcover", "Ebook", "Paperback"]),
       })
@@ -27,10 +27,14 @@ export async function fetchBookOwners() {
         },
       }
     )
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error! Status: ${response.status}`, {
+        cause: response,
+      })
     }
     const data = await response.json()
+    console.log(data)
     const parsedData = await BookOwnersResponseSchema.parseAsync(data)
     return parsedData
   } catch (error) {
